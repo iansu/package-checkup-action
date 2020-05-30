@@ -1,0 +1,20 @@
+name: 'Package Checkup Action'
+description: 'Check for vulnerable, outdated or unused dependencies'
+author: 'Ian Sutherland'
+
+inputs:
+  showOutdatedPackages:
+    description: 'Show outdated packages'
+    default: true
+    required: true
+  token:
+    description: 'GitHub authentication token'
+    required: true
+
+runs:
+  using: 'node12'
+  main: 'build/index.js'
+
+branding:
+  icon: 'activity'
+  color: 'gray-dark'

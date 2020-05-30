@@ -1,0 +1,71 @@
+{
+  "name": "package-checkup-action",
+  "description": "Check for vulnerable, outdated or unused dependencies",
+  "version": "0.1.0",
+  "author": "Ian Sutherland <ian@iansutherland.ca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iansu/package-checkup-action"
+  },
+  "main": "build/index.js",
+  "private": true,
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "start": "ts-node-dev --transpile-only --no-notify -- src/index.ts",
+    "build": "NODE_ENV=production ncc build src/index.ts -o build --minify",
+    "clean": "rimraf build",
+    "clean:modules": "rimraf node_modules",
+    "lint": "eslint \"**/*.{ts,js}\"",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts"
+  },
+  "keywords": [
+    "actions",
+    "github",
+    "dependencies",
+    "node",
+    "javascript",
+    "typescript",
+    "npm",
+    "yarn"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint"
+    ],
+    "*.{ts,js,json,yaml,yml,md}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "execa": "^4.0.2",
+    "markdown-table": "^2.0.0",
+    "semver": "^7.3.2"
+  },
+  "devDependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^2.2.0",
+    "@types/debug": "^4.1.5",
+    "@types/markdown-table": "^2.0.0",
+    "@types/node": "^14.0.6",
+    "@types/semver": "^7.2.0",
+    "@zeit/ncc": "^0.22.3",
+    "eslint": "^6.8.0",
+    "eslint-config-neo": "^0.5.2",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.7",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.9.3"
+  }
+}

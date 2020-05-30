@@ -1,0 +1,16 @@
+name: Package Checkup
+
+on:
+  pull_request:
+    types: ['opened', 'edited', 'reopened', 'synchronize']
+
+jobs:
+  title:
+    name: checkup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check dependencies
+        uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
