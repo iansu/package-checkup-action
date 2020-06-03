@@ -1,0 +1,2 @@
+{"type":"info","data":"Color legend : \n \"<red>\"    : Major Update backward-incompatible updates \n \"<yellow>\" : Minor Update backward-compatible features \n \"<green>\"  : Patch Update backward-compatible bug fixes"}
+{"type":"table","data":{"head":["Package","Current","Wanted","Latest","Package Type","URL"],"body":[["debug","4.0.0","4.0.0","4.1.1","dependencies","https://github.com/visionmedia/debug#readme"]]}}

@@ -3,7 +3,8 @@
 import { getInput, setFailed } from '@actions/core';
 import { context, GitHub } from '@actions/github';
 
-import { hasLockfile, isGitHubActions, isNpm, isYarn, debug } from './lib';
+import { isGitHubActions, debug } from './lib/actions';
+import { hasLockfile, isNpm, isYarn } from './package-manager';
 import { getOutdatedPackages } from './outdated';
 
 const commentHeader = '<!-- packageCheckupAction comment -->';

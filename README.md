@@ -1,8 +1,9 @@
 # Package Checkup Action
 
 [![Build status](https://github.com/iansu/package-checkup-action/workflows/CI/badge.svg)](https://github.com/iansu/package-checkup-action/actions)
+[![codecov](https://codecov.io/gh/iansu/package-checkup-action/branch/master/graph/badge.svg)](https://codecov.io/gh/iansu/package-checkup-action)
 
-GitHub Action to check for vulnerable, outdated or unused dependencies in JavaScript or TypeScript projects.
+GitHub Action to check for vulnerable, outdated or unused dependencies in JavaScript and TypeScript projects.
 
 This Action posts a comment on all Pull Requests with information about outdated packages, packages with security issues and unused packages as specified in `package.json`.
 
@@ -28,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Check dependencies
-        uses: package-checkup-action@v1
+        uses: iansu/package-checkup-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 ```

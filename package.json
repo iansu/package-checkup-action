@@ -1,6 +1,6 @@
 {
   "name": "package-checkup-action",
-  "description": "Check for vulnerable, outdated or unused dependencies",
+  "description": "Check for vulnerable, outdated or unused dependencies in JavaScript and TypeScript projects",
   "version": "0.1.0",
   "author": "Ian Sutherland <ian@iansutherland.ca>",
   "license": "MIT",
@@ -16,6 +16,7 @@
   "scripts": {
     "start": "ts-node-dev --transpile-only --no-notify -- src/index.ts",
     "build": "NODE_ENV=production ncc build src/index.ts -o build --minify",
+    "test": "jest",
     "clean": "rimraf build",
     "clean:modules": "rimraf node_modules",
     "lint": "eslint \"**/*.{ts,js}\"",
@@ -55,6 +56,7 @@
     "@actions/core": "^1.2.4",
     "@actions/github": "^2.2.0",
     "@types/debug": "^4.1.5",
+    "@types/jest": "^25.2.3",
     "@types/markdown-table": "^2.0.0",
     "@types/node": "^14.0.6",
     "@types/semver": "^7.2.0",
@@ -62,9 +64,11 @@
     "eslint": "^6.8.0",
     "eslint-config-neo": "^0.5.2",
     "husky": "^4.2.5",
+    "jest": "^26.0.1",
     "lint-staged": "^10.2.7",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
+    "ts-jest": "^26.1.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.9.3"
   }

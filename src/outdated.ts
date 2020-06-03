@@ -1,23 +1,7 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
-import execa from 'execa';
 import semver from 'semver';
-import table from 'markdown-table';
-import { setFailed } from '@actions/core';
+import markdownTable from 'markdown-table';
 
-import { isYarn, isNpm } from './lib';
-
-interface NpmOutdatedPackage {
-  homepage: string;
-  current: string;
-  wanted: string;
-  latest: string;
-  type: string;
-}
-
-interface NpmOutdatedOutput {
-  [key: string]: NpmOutdatedPackage;
-}
+import { packageManager } from './package-manager';
 
 const getChangeType = (current: string, latest: string): string => {
   if (semver.major(latest) > semver.major(current)) {
@@ -32,50 +16,25 @@ const getChangeType = (current: string, latest: string): string => {
 };
 
 const getOutdatedPackages = async (): Promise<string> => {
-  let outdatedPackages = '### Outdated Packages\n\n';
+  let output = '### Outdated Packages\n\n';
+  const table = [['Package', 'Current', 'Wanted', 'Latest', 'Update', 'Type']];
 
-  if (isYarn()) {
-    try {
-      await execa('yarn', ['outdated', '--json']);
-    } catch (error) {
-      if (error.exitCode !== 1) {
-        setFailed(error);
-      } else {
-        const outdated = JSON.parse(error.stdout.split('\n')[1]);
-        const tableData = [
-          ['Package', 'Current', 'Wanted', 'Latest', 'Update', 'Type'],
-          ...outdated.data.body.map((value: string[]) => [
-            `[${value[0]}](${value[5]})`,
-            value[1],
-            value[2],
-            value[3],
-            getChangeType(value[1], value[3]),
-            value[4]
-          ])
-        ];
+  const outdatedPackages = await packageManager.getOutdatedPackages();
 
-        outdatedPackages += table(tableData);
-      }
-    }
-  } else if (isNpm()) {
-    const { stdout } = await execa('npm', ['outdated', '--json', '--long']);
-    const outdated = Object.entries(JSON.parse(stdout) as NpmOutdatedOutput);
-    const tableData = [
-      ['Package', 'Current', 'Wanted', 'Latest', 'Update', 'Type'],
-      ...outdated.map(([key, value]) => [
-        `[${key}](${value.homepage})`,
-        value.current,
-        value.wanted,
-        value.latest,
-        getChangeType(value.current, value.latest),
-        value.type
-      ])
-    ];
-
-    outdatedPackages += table(tableData);
+  for (const pkg of outdatedPackages) {
+    table.push([
+      pkg.name,
+      pkg.current,
+      pkg.wanted,
+      pkg.latest,
+      getChangeType(pkg.current, pkg.latest),
+      pkg.type
+    ]);
   }
 
-  return outdatedPackages;
+  output += markdownTable(table);
+
+  return output;
 };
 
-export { getOutdatedPackages };
+export { getOutdatedPackages, getChangeType };

@@ -1,0 +1,10 @@
+{
+  "name": "yarn-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ian Sutherland",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "4.0.0"
+  }
+}
