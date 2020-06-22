@@ -6,6 +6,7 @@ import { context, GitHub } from '@actions/github';
 import { isGitHubActions, debug } from './lib/actions';
 import { hasLockfile, isNpm, isYarn } from './package-manager';
 import { getOutdatedPackages } from './outdated';
+import { getUnusedPackages } from './unused';
 
 const commentHeader = '<!-- packageCheckupAction comment -->';
 
@@ -19,6 +20,17 @@ const getMessage = async (): Promise<string> => {
       debug('outdatedPackages');
       debug(outdatedPackages);
       lines.push(outdatedPackages);
+    }
+
+    if (getInput('showUnusedPackages') !== 'false') {
+      const unusedPackages = await getUnusedPackages();
+
+      debug('unusedPackages');
+      debug(unusedPackages);
+
+      if (unusedPackages) {
+        lines.push(unusedPackages);
+      }
     }
 
     if (lines.length === 0) {

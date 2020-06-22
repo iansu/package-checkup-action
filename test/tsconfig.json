@@ -1,19 +1,8 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "strict": true,
     "strictNullChecks": false,
-    "noImplicitReturns": false,
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "target": "es6",
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "*": ["*", "../node_modules/*", "../src/*"]
-    }
+    "noImplicitReturns": false
   },
   "include": ["./**/*"]
 }

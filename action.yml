@@ -7,6 +7,20 @@ inputs:
     description: 'Show outdated packages'
     default: true
     required: true
+  showUnusedPackages:
+    description: 'Show unused packages'
+    default: true
+    required: true
+  showMissingPackages:
+    description: 'Show missing packages'
+    default: true
+    required: true
+  unusedIgnore:
+    description: 'Ignore unused packages that match pattern'
+    required: false
+  missingIgnore:
+    description: 'Ignore missing packages that match pattern'
+    required: false
   token:
     description: 'GitHub authentication token'
     required: true

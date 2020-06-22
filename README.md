@@ -40,8 +40,12 @@ The following properties can be set under `with` in the workflow:
 
 | Name                 | Description                                | Default | Required |
 | -------------------- | ------------------------------------------ | ------- | -------- |
+| missingIgnore        | Ignore missing packages that match pattern |         | No       |
+| showMissingPackages  | Show a list of missing packages            | true    | No       |
 | showOutdatedPackages | Show a list of outdated packages           | true    | No       |
+| showUnusedPackages   | Show a list of unused packages             | true    | No       |
 | token                | GitHub token used to post a comment on PRs |         | Yes      |
+| unusedIgnore         | Ignore unused packages that match pattern  |         | No       |
 
 ## Credits
 

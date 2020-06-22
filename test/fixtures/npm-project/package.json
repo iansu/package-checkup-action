@@ -1,7 +1,6 @@
 {
   "name": "npm-project",
-  "version": "0.0.0",
-  "description": "",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +9,7 @@
   "author": "Ian Sutherland",
   "license": "MIT",
   "dependencies": {
-    "debug": "^4.0.0"
+    "debug": "^4.0.0",
+    "is-string": "^1.0.5"
   }
 }
