@@ -1,7 +1,7 @@
 {
   "name": "package-checkup-action",
   "description": "Check for vulnerable, outdated or unused dependencies in JavaScript and TypeScript projects",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Ian Sutherland <ian@iansutherland.ca>",
   "license": "MIT",
   "repository": {
@@ -45,14 +45,6 @@
       "prettier --write"
     ]
   },
-  "dependencies": {
-    "debug": "^4.1.1",
-    "depcheck": "^0.9.2",
-    "execa": "^4.0.2",
-    "markdown-table": "^2.0.0",
-    "micromatch": "^4.0.2",
-    "semver": "^7.3.2"
-  },
   "devDependencies": {
     "@actions/core": "^1.2.4",
     "@actions/github": "^2.2.0",
@@ -63,13 +55,19 @@
     "@types/node": "^14.0.6",
     "@types/semver": "^7.2.0",
     "@zeit/ncc": "^0.22.3",
+    "debug": "^4.1.1",
+    "depcheck": "^0.9.2",
     "eslint": "^6.8.0",
     "eslint-config-neo": "^0.5.2",
+    "execa": "^4.0.2",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "lint-staged": "^10.2.7",
+    "markdown-table": "^2.0.0",
+    "micromatch": "^4.0.2",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
+    "semver": "^7.3.2",
     "ts-jest": "^26.1.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.9.3"
