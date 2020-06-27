@@ -10,17 +10,8 @@ import { debug, getWorkspace } from './lib/actions';
 interface DepcheckResults {
   dependencies: string[];
   devDependencies: string[];
-  using: {
-    [dependencyName: string]: string[];
-  };
   missing: {
     [dependencyName: string]: string[];
-  };
-  invalidFiles: {
-    [filePath: string]: any;
-  };
-  invalidDirs: {
-    [filePath: string]: any;
   };
 }
 
@@ -79,6 +70,8 @@ const getMissingPackageList = (depcheckResults: DepcheckResults): string[][] => 
 const getUnusedPackages = async (): Promise<string> => {
   let output = '';
 
+  debug('cwd', getWorkspace());
+
   try {
     if (getInput('showMissingPackages') === 'false') {
       await execa('npx', ['depcheck', '--skip-missing', '--json'], { cwd: getWorkspace() });
@@ -88,6 +81,8 @@ const getUnusedPackages = async (): Promise<string> => {
 
     return '';
   } catch (error) {
+    debug('depcheck results', error.stdout);
+
     const results = JSON.parse(error.stdout);
     const unusedPackages = getUnusedPackageList(results);
 
@@ -100,7 +95,7 @@ const getUnusedPackages = async (): Promise<string> => {
       const missingPackages = getMissingPackageList(results);
 
       if (missingPackages.length > 0) {
-        output += '### Missing Packages\n\n';
+        output += '\n\n### Missing Packages\n\n';
         output += markdownTable([['Package'], ...missingPackages]);
       }
     }
