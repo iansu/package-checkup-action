@@ -5,7 +5,7 @@ import micromatch from 'micromatch';
 import markdownTable from 'markdown-table';
 import { getInput } from '@actions/core';
 
-import { debug } from './lib/actions';
+import { debug, getWorkspace } from './lib/actions';
 
 interface DepcheckResults {
   dependencies: string[];
@@ -81,9 +81,9 @@ const getUnusedPackages = async (): Promise<string> => {
 
   try {
     if (getInput('showMissingPackages') === 'false') {
-      await execa('npx', ['depcheck', '--json']);
+      await execa('npx', ['depcheck', '--skip-missing', '--json'], { cwd: getWorkspace() });
     } else {
-      await execa('npx', ['depcheck', '--skip-missing', '--json']);
+      await execa('npx', ['depcheck', '--json'], { cwd: getWorkspace() });
     }
 
     return '';
