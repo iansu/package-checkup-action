@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import { getInput, setFailed } from '@actions/core';
-import { context, GitHub } from '@actions/github';
+import { context } from '@actions/github';
+import { Octokit } from '@octokit/action';
 
 import { isGitHubActions, debug } from './lib/actions';
 import { hasLockfile, isNpm, isYarn } from './package-manager';
@@ -80,8 +81,8 @@ const run = async (): Promise<void> => {
     const message = await getMessage();
     const [owner, repo] = githubRepo.split('/');
     const pullRequestNumber = context.payload.pull_request.number;
-    const githubToken = getInput('token');
-    const octokit = new GitHub(githubToken);
+    // const githubToken = getInput('token');
+    const octokit = new Octokit();
     const comments = await octokit.issues.listCommentsForRepo({ owner, repo });
     const existingComment = comments.data.find(comment => comment.body.startsWith(commentHeader));
 
