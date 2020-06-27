@@ -77,9 +77,9 @@ const getUnusedPackages = async (): Promise<string> => {
 
   try {
     if (getInput('showMissingPackages') === 'false') {
-      await execa('npx', ['depcheck', '--skip-missing', '--json'], { cwd: getWorkspace() });
+      await execa('npx', ['depcheck@0.9.2', '--skip-missing', '--json'], { cwd: getWorkspace() });
     } else {
-      await execa('npx', ['depcheck', '--json'], { cwd: getWorkspace() });
+      await execa('npx', ['depcheck@0.9.2', '--json'], { cwd: getWorkspace() });
     }
 
     return '';
