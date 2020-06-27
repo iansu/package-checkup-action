@@ -1,7 +1,7 @@
 {
   "name": "package-checkup-action",
-  "description": "Check for vulnerable, outdated or unused dependencies",
-  "version": "0.1.0",
+  "description": "Check for vulnerable, outdated or unused dependencies in JavaScript and TypeScript projects",
+  "version": "0.2.0",
   "author": "Ian Sutherland <ian@iansutherland.ca>",
   "license": "MIT",
   "repository": {
@@ -16,11 +16,11 @@
   "scripts": {
     "start": "ts-node-dev --transpile-only --no-notify -- src/index.ts",
     "build": "NODE_ENV=production ncc build src/index.ts -o build --minify",
+    "test": "jest",
     "clean": "rimraf build",
     "clean:modules": "rimraf node_modules",
     "lint": "eslint \"**/*.{ts,js}\"",
-    "format": "prettier --write **/*.ts",
-    "format-check": "prettier --check **/*.ts"
+    "format": "prettier --write **/*.ts"
   },
   "keywords": [
     "actions",
@@ -45,27 +45,31 @@
       "prettier --write"
     ]
   },
-  "dependencies": {
-    "debug": "^4.1.1",
-    "execa": "^4.0.2",
-    "markdown-table": "^2.0.0",
-    "semver": "^7.3.2"
-  },
   "devDependencies": {
     "@actions/core": "^1.2.4",
-    "@actions/github": "^2.2.0",
+    "@actions/github": "^4.0.0",
+    "@octokit/action": "^3.0.0",
     "@types/debug": "^4.1.5",
+    "@types/jest": "^26.0.0",
     "@types/markdown-table": "^2.0.0",
-    "@types/node": "^14.0.6",
+    "@types/micromatch": "^4.0.1",
+    "@types/node": "^14.0.13",
     "@types/semver": "^7.2.0",
     "@zeit/ncc": "^0.22.3",
+    "debug": "^4.1.1",
     "eslint": "^6.8.0",
     "eslint-config-neo": "^0.5.2",
+    "execa": "^4.0.2",
     "husky": "^4.2.5",
-    "lint-staged": "^10.2.7",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.11",
+    "markdown-table": "^2.0.0",
+    "micromatch": "^4.0.2",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.2",
-    "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "^3.9.3"
+    "semver": "^7.3.2",
+    "ts-jest": "^26.1.0",
+    "ts-node-dev": "1.0.0-pre.44",
+    "typescript": "^3.9.5"
   }
 }
