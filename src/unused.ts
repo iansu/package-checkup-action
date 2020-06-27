@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import fs from 'fs';
+import path from 'path';
 import execa from 'execa';
 import micromatch from 'micromatch';
 import markdownTable from 'markdown-table';
@@ -71,6 +73,7 @@ const getUnusedPackages = async (): Promise<string> => {
   let output = '';
 
   debug('cwd', getWorkspace());
+  debug('package.json', fs.readFileSync(path.join(getWorkspace(), 'package.json')).toString());
 
   try {
     if (getInput('showMissingPackages') === 'false') {
