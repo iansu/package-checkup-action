@@ -21,7 +21,7 @@ inputs:
   missingIgnore:
     description: 'Ignore missing packages that match pattern'
     required: false
-  token:
+  GITHUB_TOKEN:
     description: 'GitHub authentication token'
     required: true
 
