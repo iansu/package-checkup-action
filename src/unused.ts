@@ -1,11 +1,30 @@
-import depcheck from 'depcheck';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import execa from 'execa';
 import micromatch from 'micromatch';
 import markdownTable from 'markdown-table';
 import { getInput } from '@actions/core';
 
-import { getWorkspace, debug } from './lib/actions';
+import { debug } from './lib/actions';
 
-const getUnusedPackageList = (depcheckResults: depcheck.Results): string[][] => {
+interface DepcheckResults {
+  dependencies: string[];
+  devDependencies: string[];
+  using: {
+    [dependencyName: string]: string[];
+  };
+  missing: {
+    [dependencyName: string]: string[];
+  };
+  invalidFiles: {
+    [filePath: string]: any;
+  };
+  invalidDirs: {
+    [filePath: string]: any;
+  };
+}
+
+const getUnusedPackageList = (depcheckResults: DepcheckResults): string[][] => {
   const unusedIgnore = getInput('unusedIgnore');
   const unusedPackages = [];
 
@@ -37,7 +56,7 @@ const getUnusedPackageList = (depcheckResults: depcheck.Results): string[][] => 
   return unusedPackages;
 };
 
-const getMissingPackageList = (depcheckResults: depcheck.Results): string[][] => {
+const getMissingPackageList = (depcheckResults: DepcheckResults): string[][] => {
   const missingIgnore = getInput('missingIgnore');
   const missingPackages = [];
 
@@ -60,26 +79,34 @@ const getMissingPackageList = (depcheckResults: depcheck.Results): string[][] =>
 const getUnusedPackages = async (): Promise<string> => {
   let output = '';
 
-  const results = await depcheck(getWorkspace(), {
-    skipMissing: getInput('showMissingPackages') === 'false'
-  });
-  const unusedPackages = getUnusedPackageList(results);
-
-  if (unusedPackages.length > 0) {
-    output += '### Unused Packages\n\n';
-    output += markdownTable([['Package', 'Type'], ...unusedPackages]);
-  }
-
-  if (getInput('showMissingPackages') !== 'false') {
-    const missingPackages = getMissingPackageList(results);
-
-    if (missingPackages.length > 0) {
-      output += '### Missing Packages\n\n';
-      output += markdownTable([['Package'], ...missingPackages]);
+  try {
+    if (getInput('showMissingPackages') === 'false') {
+      await execa('npx', ['depcheck', '--json']);
+    } else {
+      await execa('npx', ['depcheck', '--skip-missing', '--json']);
     }
-  }
 
-  return output;
+    return '';
+  } catch (error) {
+    const results = JSON.parse(error.stdout);
+    const unusedPackages = getUnusedPackageList(results);
+
+    if (unusedPackages.length > 0) {
+      output += '### Unused Packages\n\n';
+      output += markdownTable([['Package', 'Type'], ...unusedPackages]);
+    }
+
+    if (getInput('showMissingPackages') !== 'false') {
+      const missingPackages = getMissingPackageList(results);
+
+      if (missingPackages.length > 0) {
+        output += '### Missing Packages\n\n';
+        output += markdownTable([['Package'], ...missingPackages]);
+      }
+    }
+
+    return output;
+  }
 };
 
 export { getUnusedPackages, getUnusedPackageList, getMissingPackageList };
